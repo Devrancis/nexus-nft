@@ -64,7 +64,7 @@ export default function Create() {
       <div className="border-b border-white/5">
         <div className="container mx-auto px-4 lg:px-8 py-10">
           <div className="flex items-start gap-4">
-            <span className="font-mono text-xs text-muted-foreground tracking-[0.2em] uppercase pt-1.5">04</span>
+            <span className="font-mono text-xs text-muted-foreground tracking-[0.2em] uppercase pt-1.5"></span>
             <div>
               <h1 className="font-display text-3xl md:text-4xl font-bold">Create New Item</h1>
               <p className="text-muted-foreground mt-1">Upload your artwork and mint it to Solana Devnet</p>

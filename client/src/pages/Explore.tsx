@@ -48,7 +48,7 @@ export default function Explore() {
         <div className="container mx-auto px-4 lg:px-8 py-10">
           <div className="flex items-end justify-between gap-6">
             <div className="flex items-start gap-4">
-              <span className="font-mono text-xs text-muted-foreground tracking-[0.2em] uppercase pt-1.5">03</span>
+              <span className="font-mono text-xs text-muted-foreground tracking-[0.2em] uppercase pt-1.5"></span>
               <div>
                 <h1 className="font-display text-3xl md:text-4xl font-bold">Explore</h1>
                 <p className="text-muted-foreground mt-1">

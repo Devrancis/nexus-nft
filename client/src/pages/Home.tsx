@@ -67,7 +67,7 @@ export default function Home() {
             className="flex-1 lg:max-w-[56%]"
           >
             <div className="flex items-center gap-3 mb-8">
-              <span className="font-mono text-xs text-muted-foreground tracking-[0.2em] uppercase">01</span>
+              <span className="font-mono text-xs text-muted-foreground tracking-[0.2em] uppercase"></span>
               <span className="h-px w-8 bg-muted-foreground/40" />
               <span className="flex items-center gap-1.5 text-xs font-medium text-accent">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
@@ -143,7 +143,7 @@ export default function Home() {
       <section className="container mx-auto px-4 lg:px-8 py-24">
         <div className="flex items-end justify-between mb-12">
           <div className="flex items-start gap-4">
-            <span className="font-mono text-xs text-muted-foreground tracking-[0.2em] uppercase pt-1.5">02</span>
+            <span className="font-mono text-xs text-muted-foreground tracking-[0.2em] uppercase pt-1.5"></span>
             <div>
               <h2 className="font-display text-3xl md:text-4xl font-bold">Trending Now</h2>
               <p className="text-muted-foreground mt-1">Most popular drops this week</p>
