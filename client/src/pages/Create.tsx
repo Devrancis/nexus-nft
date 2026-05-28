@@ -5,12 +5,11 @@ import { z } from "zod";
 import { useCreateNft } from "@/hooks/use-nfts";
 import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Upload, Sparkles, AlertCircle } from "lucide-react";
+import { Loader2, Upload, Info, AlertCircle } from "lucide-react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { motion } from "framer-motion";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
-// Extended schema to handle coercion
 const formSchema = insertNftSchema.extend({
   priceSol: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
     message: "Price must be a positive number",
@@ -30,7 +29,7 @@ export default function Create() {
     defaultValues: {
       title: "",
       description: "",
-      imageUrl: "", // We'll just input a URL for this demo
+      imageUrl: "",
       priceSol: "0.5",
       ownerAddress: publicKey?.toBase58() || "",
     },
@@ -51,9 +50,9 @@ export default function Create() {
         ...data,
         ownerAddress: publicKey?.toBase58(),
       });
-      
+
       toast({
-        title: "Success! NFT Minted",
+        title: "NFT Minted Successfully",
         description: "Your digital asset has been created on the network.",
       });
       setLocation("/explore");
@@ -69,7 +68,7 @@ export default function Create() {
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        
+
         {/* Left Side: Information */}
         <div className="space-y-8">
           <div>
@@ -80,14 +79,14 @@ export default function Create() {
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-primary/5 border border-primary/20">
-            <div className="flex items-start gap-4">
-              <Sparkles className="h-6 w-6 text-primary shrink-0 mt-1" />
+          <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/10">
+            <div className="flex items-start gap-3">
+              <Info className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-bold text-primary mb-1">Minting Simulation</h3>
-                <p className="text-sm text-muted-foreground">
-                  This portfolio demo simulates the on-chain minting process. 
-                  The metadata is stored in our database, but interacts with your wallet signature.
+                <h3 className="font-semibold text-sm mb-1 text-foreground/80">Devnet Environment</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Transactions are submitted to Solana Devnet. No real funds are required.
+                  Your wallet signature is used to authorize the mint.
                 </p>
               </div>
             </div>
@@ -95,21 +94,26 @@ export default function Create() {
 
           {/* Preview Card */}
           <div className="hidden lg:block">
-            <h3 className="font-bold mb-4 text-sm uppercase tracking-wider text-muted-foreground">Preview</h3>
-            <div className="w-full max-w-xs mx-auto transform rotate-2 hover:rotate-0 transition-transform duration-500">
+            <h3 className="font-medium mb-4 text-sm uppercase tracking-wider text-muted-foreground/60">Live Preview</h3>
+            <div className="w-full max-w-xs">
               <div className="neon-border rounded-xl bg-card p-4 shadow-2xl">
-                <div className="aspect-square rounded-lg bg-muted mb-4 overflow-hidden">
-                   {form.watch("imageUrl") ? (
-                     <img src={form.watch("imageUrl")} alt="Preview" className="w-full h-full object-cover" />
-                   ) : (
-                     <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                       <Upload className="h-8 w-8 opacity-20" />
-                     </div>
-                   )}
+                <div className="aspect-square rounded-lg bg-muted/30 mb-4 overflow-hidden">
+                  {form.watch("imageUrl") ? (
+                    <img src={form.watch("imageUrl")} alt="Preview" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground gap-2">
+                      <Upload className="h-8 w-8 opacity-20" />
+                      <span className="text-xs opacity-40">Image preview</span>
+                    </div>
+                  )}
                 </div>
                 <div className="space-y-2">
-                  <div className="h-6 w-3/4 bg-white/10 rounded animate-pulse" />
-                  <div className="h-4 w-1/2 bg-white/5 rounded animate-pulse" />
+                  {form.watch("title") ? (
+                    <p className="font-bold text-sm">{form.watch("title")}</p>
+                  ) : (
+                    <div className="h-5 w-3/4 bg-white/10 rounded animate-pulse" />
+                  )}
+                  <div className="h-3.5 w-1/2 bg-white/5 rounded animate-pulse" />
                 </div>
               </div>
             </div>
@@ -125,30 +129,26 @@ export default function Create() {
               </div>
               <h3 className="text-xl font-bold mb-2">Connect Wallet</h3>
               <p className="text-muted-foreground mb-8 max-w-xs">
-                You need to connect your Solana wallet to proceed with minting.
+                Connect your Solana wallet to proceed with minting.
               </p>
               <WalletMultiButton />
             </div>
           ) : (
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              
-              {/* Image URL Input (Simulated Upload) */}
+
+              {/* Image URL */}
               <div className="space-y-2">
                 <label className="text-sm font-medium">Image URL</label>
                 <div className="relative">
-                  {/* landing page hero scenic mountain landscape */}
                   <input
                     {...form.register("imageUrl")}
-                    placeholder="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800&q=80"
+                    placeholder="https://..."
                     className="w-full h-12 px-4 rounded-xl bg-background/50 border border-white/10 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-muted-foreground/50"
                   />
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
-                    Direct URL
-                  </div>
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  Paste a direct image URL. In a real app, this would be an IPFS upload.
-                </p>
+                {form.formState.errors.imageUrl && (
+                  <p className="text-xs text-destructive">{form.formState.errors.imageUrl.message}</p>
+                )}
               </div>
 
               {/* Title */}
@@ -204,7 +204,7 @@ export default function Create() {
                       Minting...
                     </>
                   ) : (
-                    "Create Item"
+                    "Mint Item"
                   )}
                 </button>
               </div>

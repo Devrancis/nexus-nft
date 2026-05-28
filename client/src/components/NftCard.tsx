@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Link } from "wouter";
 import type { Nft } from "@shared/schema";
 import { ExternalLink, Tag } from "lucide-react";
 
@@ -20,19 +19,24 @@ export function NftCard({ nft, index }: NftCardProps) {
         <div className="glass-panel h-full overflow-hidden rounded-xl p-3 flex flex-col hover:bg-card/80 transition-colors">
           {/* Image Container */}
           <div className="relative aspect-square overflow-hidden rounded-lg bg-muted/20">
-            <img 
-              src={nft.imageUrl} 
+            <img
+              src={nft.imageUrl}
               alt={nft.title}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
             />
-            
+
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-              <Link href={`/nft/${nft.id}`}>
+              <a
+                href={`https://solscan.io/token/${nft.id}?cluster=devnet`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full"
+              >
                 <button className="w-full rounded-lg bg-white/10 backdrop-blur-md border border-white/20 py-2 text-sm font-semibold text-white hover:bg-white/20 transition-colors">
-                  View Details
+                  View on Solscan
                 </button>
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -42,27 +46,29 @@ export function NftCard({ nft, index }: NftCardProps) {
               <h3 className="font-display text-lg font-bold text-foreground line-clamp-1 group-hover:text-primary transition-colors">
                 {nft.title}
               </h3>
-              <a 
-                href={`https://solscan.io/token/${nft.id}?cluster=devnet`} 
-                target="_blank" 
+              <a
+                href={`https://solscan.io/token/${nft.id}?cluster=devnet`}
+                target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
+                className="text-muted-foreground hover:text-primary transition-colors shrink-0"
                 title="View on Solscan"
               >
                 <ExternalLink className="h-4 w-4" />
               </a>
             </div>
-            
+
             <p className="text-sm text-muted-foreground line-clamp-2 flex-1">
               {nft.description}
             </p>
 
             <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3">
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
-                <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                Waitlist
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-green-500/10 border border-green-500/20 px-2 py-0.5 text-green-400">
+                  <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
+                  Devnet
+                </span>
               </div>
-              
+
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1 rounded-md bg-primary/10 px-2.5 py-1 text-primary">
                   <Tag className="h-3.5 w-3.5" />
